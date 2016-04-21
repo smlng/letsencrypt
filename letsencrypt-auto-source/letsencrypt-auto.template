@@ -131,7 +131,7 @@ Bootstrap() {
   elif [ -f /etc/redhat-release ]; then
     echo "Bootstrapping dependencies for RedHat-based OSes..."
     BootstrapRpmCommon
-  elif [ -f /etc/os-release ] && `grep -q openSUSE /etc/os-release` ; then
+  elif [ -f /etc/os-release ] && `grep openSUSE /etc/os-release` ; then
     echo "Bootstrapping dependencies for openSUSE-based OSes..."
     BootstrapSuseCommon
   elif [ -f /etc/arch-release ]; then
@@ -150,11 +150,13 @@ Bootstrap() {
     ExperimentalBootstrap "Manjaro Linux" BootstrapArchCommon
   elif [ -f /etc/gentoo-release ]; then
     ExperimentalBootstrap "Gentoo" BootstrapGentooCommon
-  elif uname | grep -iq FreeBSD ; then
+  elif uname | grep -i FreeBSD ; then
     ExperimentalBootstrap "FreeBSD" BootstrapFreeBsd
-  elif uname | grep -iq Darwin ; then
+  elif uname | grep -i Darwin ; then
     ExperimentalBootstrap "Mac OS X" BootstrapMac
-  elif grep -iq "Amazon Linux" /etc/issue ; then
+  elif uname | grep -i SunOS ; then
+      ExperimentalBootstrap "Solaris" BootstrapSolaris
+  elif grep -i "Amazon Linux" /etc/issue ; then
     ExperimentalBootstrap "Amazon Linux" BootstrapRpmCommon
   else
     echo "Sorry, I don't know how to bootstrap Certbot on your operating system!"
